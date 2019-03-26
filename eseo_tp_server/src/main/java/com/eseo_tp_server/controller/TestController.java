@@ -14,7 +14,7 @@ public class TestController {
 	public String get(@RequestParam(required =false, value="value") String value) {
 		System.out.println("Appel GET");
 		System.out.println("value : "+ value);
-		
+		//jsp quelle modif faire
 		return value;
 	}
 }
