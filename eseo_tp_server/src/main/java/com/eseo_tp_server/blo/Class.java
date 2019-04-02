@@ -3,6 +3,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.eseo_tp_server.dao.Co;
+
 public class Class {
 
 	public void requeteTrouverVilles() {
