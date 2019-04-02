@@ -1,16 +1,15 @@
 package com.eseo_tp_server.dao;
 
-
 import java.sql.*;
 
 public class Co {
-	
+
 	Connection connexion;
-	
+
 	public Co() {
 		this.connexion = connecterDB();
 	}
-	
+
 	public Connection getCo() {
 		return this.connexion;
 	}
@@ -31,7 +30,5 @@ public class Co {
 			return null;
 		}
 	}
-
-	
 
 }

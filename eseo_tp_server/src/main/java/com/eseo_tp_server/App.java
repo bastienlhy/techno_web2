@@ -14,7 +14,6 @@ public class App
     		System.out.println("appli démarrée");
 		} catch (Exception e) {
 			System.out.println("Appli erreur \n" + e);
-		}
-    	
+		}  	
     }
 }
