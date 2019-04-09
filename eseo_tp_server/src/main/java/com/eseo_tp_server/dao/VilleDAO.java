@@ -22,7 +22,7 @@ public class VilleDAO {
 			resultats = stmt.executeQuery(requete);
 		} catch (SQLException e) {
 			// traitement de l'exception
-			System.out.println("marche pas");
+
 		}
 
 		ArrayList<String> villes = new ArrayList<String>();
@@ -46,15 +46,12 @@ public class VilleDAO {
 	public ArrayList<String> requeteTrouverVillesFiltre(String nomCommune, String codePostal) {
 		Co co = new Co();
 		String requete = null;
-		if(nomCommune == null || codePostal ==null) {
+		if (nomCommune == null || codePostal == null) {
 			requete = "select * from ville_france where Nom_commune = \'" + nomCommune + "\' or Code_postal = \'"
-				+ codePostal + "\'";
-//			System.out.println("if");
-		}
-		else {
+					+ codePostal + "\'";
+		} else {
 			requete = "select * from ville_france where Nom_commune = \'" + nomCommune + "\' and Code_postal = \'"
 					+ codePostal + "\'";
-//			System.out.println("else");
 		}
 
 		ResultSet resultats = null;
@@ -62,21 +59,12 @@ public class VilleDAO {
 			Statement stmt = co.getCo().createStatement();
 			resultats = stmt.executeQuery(requete);
 		} catch (SQLException e) {
-			// traitement de l'exception
-			System.out.println("marche pas");
+
 		}
-		System.out.println(resultats);
+		
 		ArrayList<String> villes = new ArrayList<String>();
-		System.out.println("ici");
+		
 		try {
-//			resultats.first();
-//			villes.add(resultats.getString("Code_commune_INSEE"));
-//			villes.add(resultats.getString("Nom_commune"));
-//			villes.add(resultats.getString("Code_postal"));
-//			villes.add(resultats.getString("Libelle_acheminement"));
-//			villes.add(resultats.getString("Ligne_5"));
-//			villes.add(resultats.getString("Latitude"));
-//			villes.add(resultats.getString("Longitude"));
 			while (resultats.next()) {
 				villes.add(resultats.getString("Code_commune_INSEE"));
 				villes.add(resultats.getString("Nom_commune"));
@@ -85,14 +73,62 @@ public class VilleDAO {
 				villes.add(resultats.getString("Ligne_5"));
 				villes.add(resultats.getString("Latitude"));
 				villes.add(resultats.getString("Longitude"));
-				System.out.println("ici");
-				System.out.println(villes);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return villes;
+	}
+
+	public String creerVille(String codeCommuneInsee, String nomCommune, String codePostal, String libelleAcheminement,
+			String ligne5, String lattitude, String longitude) {
+		
+		Co co = new Co();
+		String requete = "INSERT INTO ville_france(Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement, Ligne_5, Latitude, Longitude) VALUES (\'"
+				+ codeCommuneInsee + "\', \'" + nomCommune + "\', \'" + codePostal + "\', \'" + libelleAcheminement
+				+ "\', \'" + ligne5 + "\', \'" + lattitude + "\', \'" + longitude + "\')";
+
+		try {
+			Statement stmt = co.getCo().createStatement();
+			stmt.executeUpdate(requete);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return codeCommuneInsee + " " + nomCommune + " " + codePostal + " " + libelleAcheminement + " " + ligne5 + " "
+				+ lattitude + " " + longitude;
+	}
+
+	public String modifierVille(String colonneModifiee, String valeurModif, String Code_commune_INSEE) {
+		Co co = new Co();
+		String update = "UPDATE ville_france SET " + colonneModifiee + " = \'" + valeurModif
+				+ "\'WHERE Code_commune_INSEE = \'" + Code_commune_INSEE + "\'";
+
+		try {
+			Statement stmt = co.getCo().createStatement();
+			stmt.executeUpdate(update);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return colonneModifiee + " : " + valeurModif + "Code_commune_INSEE : " + Code_commune_INSEE;
+	}
+
+	public String supprimerVille(String Code_commune_INSEE) {
+		Co co = new Co();
+		String update = "DELETE FROM ville_france WHERE Code_commune_INSEE = " + Code_commune_INSEE;
+		try {
+			Statement stmt = co.getCo().createStatement();
+			stmt.executeUpdate(update);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return "La ville possédant le code commune INSEE : " + Code_commune_INSEE + " a bien été supprimée de la bdd";
 	}
 
 }
