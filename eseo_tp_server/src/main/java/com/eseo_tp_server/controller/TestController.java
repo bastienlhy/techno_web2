@@ -24,7 +24,7 @@ public class TestController {
 			for (int i = 0; i < villes.size(); i++) {
 				resultats += villes.get(i) + " ";
 				if (i%7==0 && i!=0)
-					resultats += "<br>";
+					resultats += "<br>"; 
 			}
 		}
 
