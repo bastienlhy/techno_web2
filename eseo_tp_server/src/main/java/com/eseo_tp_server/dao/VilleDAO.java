@@ -5,36 +5,76 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.eseo_tp_server.blo.Ville;
+
 public class VilleDAO {
 
 	public VilleDAO() {
 
 	}
 
-	public ArrayList<String> requeteTrouverVilles() {
+	public Ville[] requeteTrouverVilles() {
 		Co co = new Co();
 
 		String requete = "select * from ville_france ";
+		String requeteCount = "select COUNT(*) as nbVilles FROM `ville_france";
 
 		ResultSet resultats = null;
+//		ResultSet resultatCount = null;
 		try {
 			Statement stmt = co.getCo().createStatement();
 			resultats = stmt.executeQuery(requete);
+//			resultatCount = stmt.executeQuery(requeteCount);
+//			System.out.println(resultatCount.getString(0));
 		} catch (SQLException e) {
 			// traitement de l'exception
 
 		}
 
-		ArrayList<String> villes = new ArrayList<String>();
+//		ArrayList<String> villes = new ArrayList<String>();
+//		try {
+//			while (resultats.next()) {
+//				villes.add(resultats.getString("Code_commune_INSEE"));
+//				villes.add(resultats.getString("Nom_commune"));
+//				villes.add(resultats.getString("Code_postal"));
+//				villes.add(resultats.getString("Libelle_acheminement"));
+//				villes.add(resultats.getString("Ligne_5"));
+//				villes.add(resultats.getString("Latitude"));
+//				villes.add(resultats.getString("Longitude"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+
+		Ville[] villes = new Ville[3352];
+//		Ville[] villes = null;
+//		try {
+//			System.out.println("count"+resultatCount.getInt("nbVilles"));
+//			villes = new Ville[3353];
+//		} catch (SQLException e1) {
+//			System.out.println("ici");
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
+		
 		try {
+			int i = 0;
 			while (resultats.next()) {
-				villes.add(resultats.getString("Code_commune_INSEE"));
-				villes.add(resultats.getString("Nom_commune"));
-				villes.add(resultats.getString("Code_postal"));
-				villes.add(resultats.getString("Libelle_acheminement"));
-				villes.add(resultats.getString("Ligne_5"));
-				villes.add(resultats.getString("Latitude"));
-				villes.add(resultats.getString("Longitude"));
+//				villes.add(new Ville(resultats.getString("Code_commune_INSEE"),
+//						resultats.getString("Nom_commune"),
+//						resultats.getString("Code_postal"),
+//						resultats.getString("Libelle_acheminement"),
+//						resultats.getString("Ligne_5"),
+//						resultats.getString("Latitude"),
+//						resultats.getString("Longitude")));
+				villes[i] = new Ville(resultats.getString("Code_commune_INSEE"), resultats.getString("Nom_commune"),
+						resultats.getString("Code_postal"), resultats.getString("Libelle_acheminement"),
+						resultats.getString("Ligne_5"), resultats.getString("Latitude"),
+						resultats.getString("Longitude"));
+//				System.out.println(villes[i].getNomCommune());
+				++i;
+//				System.out.println("i : "+i);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,9 +101,9 @@ public class VilleDAO {
 		} catch (SQLException e) {
 
 		}
-		
+
 		ArrayList<String> villes = new ArrayList<String>();
-		
+
 		try {
 			while (resultats.next()) {
 				villes.add(resultats.getString("Code_commune_INSEE"));
@@ -83,7 +123,7 @@ public class VilleDAO {
 
 	public String creerVille(String codeCommuneInsee, String nomCommune, String codePostal, String libelleAcheminement,
 			String ligne5, String lattitude, String longitude) {
-		
+
 		Co co = new Co();
 		String requete = "INSERT INTO ville_france(Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement, Ligne_5, Latitude, Longitude) VALUES (\'"
 				+ codeCommuneInsee + "\', \'" + nomCommune + "\', \'" + codePostal + "\', \'" + libelleAcheminement
@@ -101,20 +141,43 @@ public class VilleDAO {
 				+ lattitude + " " + longitude;
 	}
 
-	public String modifierVille(String colonneModifiee, String valeurModif, String Code_commune_INSEE) {
+	public String modifierVille(String Code_commune_INSEE, String nomCommune, String codePostal, String libelle,
+			String ligne5, String latitude, String longitude) {
 		Co co = new Co();
-		String update = "UPDATE ville_france SET " + colonneModifiee + " = \'" + valeurModif
+		String updateNomCommune = "UPDATE ville_france SET Nom_commune = \'" + nomCommune
+				+ "\'WHERE Code_commune_INSEE = \'" + Code_commune_INSEE + "\'";
+		String updateCodePostal = "UPDATE ville_france SET Code_postal = \'" + codePostal
+				+ "\'WHERE Code_commune_INSEE = \'" + Code_commune_INSEE + "\'";
+		String updateLibelle = "UPDATE ville_france SET Libelle_acheminement = \'" + libelle
+				+ "\'WHERE Code_commune_INSEE = \'" + Code_commune_INSEE + "\'";
+		String updateLigne5 = "UPDATE ville_france SET Ligne_5 = \'" + ligne5 + "\'WHERE Code_commune_INSEE = \'"
+				+ Code_commune_INSEE + "\'";
+		String updateLatitude = "UPDATE ville_france SET Latitude = \'" + latitude + "\'WHERE Code_commune_INSEE = \'"
+				+ Code_commune_INSEE + "\'";
+		String updateLongitude = "UPDATE ville_france SET Longitude = \'" + longitude
 				+ "\'WHERE Code_commune_INSEE = \'" + Code_commune_INSEE + "\'";
 
 		try {
 			Statement stmt = co.getCo().createStatement();
-			stmt.executeUpdate(update);
+			if (nomCommune != null)
+				stmt.executeUpdate(updateNomCommune);
+			if (codePostal != null)
+				stmt.executeUpdate(updateCodePostal);
+			if (libelle != null)
+				stmt.executeUpdate(updateLibelle);
+			if (ligne5 != null)
+				stmt.executeUpdate(updateLigne5);
+			if (latitude != null)
+				stmt.executeUpdate(updateLatitude);
+			if (longitude != null)
+				stmt.executeUpdate(updateLongitude);
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
-		return colonneModifiee + " : " + valeurModif + "Code_commune_INSEE : " + Code_commune_INSEE;
+		return "La modification de la commune possèdant le Code_commune_INSEE : " + Code_commune_INSEE
+				+ " a été réalisée.";
 	}
 
 	public String supprimerVille(String Code_commune_INSEE) {
