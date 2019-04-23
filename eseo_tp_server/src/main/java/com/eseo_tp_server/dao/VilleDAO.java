@@ -17,64 +17,28 @@ public class VilleDAO {
 		Co co = new Co();
 
 		String requete = "select * from ville_france ";
-		String requeteCount = "select COUNT(*) as nbVilles FROM `ville_france";
+//		String requeteCount = "select COUNT(*) as nbVilles FROM `ville_france";
 
 		ResultSet resultats = null;
-//		ResultSet resultatCount = null;
 		try {
 			Statement stmt = co.getCo().createStatement();
 			resultats = stmt.executeQuery(requete);
-//			resultatCount = stmt.executeQuery(requeteCount);
-//			System.out.println(resultatCount.getString(0));
 		} catch (SQLException e) {
-			// traitement de l'exception
 
 		}
 
-//		ArrayList<String> villes = new ArrayList<String>();
-//		try {
-//			while (resultats.next()) {
-//				villes.add(resultats.getString("Code_commune_INSEE"));
-//				villes.add(resultats.getString("Nom_commune"));
-//				villes.add(resultats.getString("Code_postal"));
-//				villes.add(resultats.getString("Libelle_acheminement"));
-//				villes.add(resultats.getString("Ligne_5"));
-//				villes.add(resultats.getString("Latitude"));
-//				villes.add(resultats.getString("Longitude"));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
 
 		Ville[] villes = new Ville[3352];
-//		Ville[] villes = null;
-//		try {
-//			System.out.println("count"+resultatCount.getInt("nbVilles"));
-//			villes = new Ville[3353];
-//		} catch (SQLException e1) {
-//			System.out.println("ici");
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 		
 		
 		try {
 			int i = 0;
 			while (resultats.next()) {
-//				villes.add(new Ville(resultats.getString("Code_commune_INSEE"),
-//						resultats.getString("Nom_commune"),
-//						resultats.getString("Code_postal"),
-//						resultats.getString("Libelle_acheminement"),
-//						resultats.getString("Ligne_5"),
-//						resultats.getString("Latitude"),
-//						resultats.getString("Longitude")));
 				villes[i] = new Ville(resultats.getString("Code_commune_INSEE"), resultats.getString("Nom_commune"),
 						resultats.getString("Code_postal"), resultats.getString("Libelle_acheminement"),
 						resultats.getString("Ligne_5"), resultats.getString("Latitude"),
 						resultats.getString("Longitude"));
-//				System.out.println(villes[i].getNomCommune());
 				++i;
-//				System.out.println("i : "+i);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -32,11 +32,10 @@ public class AccueilServ extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		String codeVille1 = request.getParameter("nomVille1");
 		String codeVille2 = request.getParameter("nomVille2");
-//		System.out.println(codeVille1);
-//		System.out.println(codeVille2);
+		
 		HttpSession session2 = request.getSession();
 		Ville[] villes = (Ville[]) session2.getAttribute("villes");
 
@@ -44,7 +43,7 @@ public class AccueilServ extends HttpServlet {
 		Ville ville1 = null;
 		Ville ville2 = null;
 		for (int i = 0; i < villes.length; i++) {
-//			System.out.println("for");
+
 			if (villes[i].getCodeCommuneInsee().equals(codeVille1)) {
 				ville1 = villes[i];
 			} 
@@ -59,7 +58,7 @@ public class AccueilServ extends HttpServlet {
 		session2.setAttribute("nomVille2", ville2.getNomCommune());
 		session2.setAttribute("distance", distance);
 
-		// lien vers une JSP
+
 		RequestDispatcher dispat = request.getRequestDispatcher("VisualiserDistance.jsp");
 		dispat.forward(request, response);
 	}
@@ -73,9 +72,9 @@ public class AccueilServ extends HttpServlet {
 			double lon1 = Double.parseDouble(ville1.getLongitude());
 			double lon2 = Double.parseDouble(ville2.getLongitude());
 
-			int R = 6371; // Radius of the earth in km
+			int R = 6371;
 
-			double dLat = (lat2 - lat1) * (Math.PI / 180); // deg2rad below
+			double dLat = (lat2 - lat1) * (Math.PI / 180); 
 			double dLon = (lon2 - lon1) * (Math.PI / 180);
 
 			double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos((lat1) * (Math.PI / 180))

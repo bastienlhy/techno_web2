@@ -13,36 +13,16 @@ import com.eseo_tp_server.dao.VilleDAO;
 
 @RestController
 public class TestController {
-//	@RequestMapping(value = "/test", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String get(@RequestParam(required = false, value = "value") String value) {
-//		String resultats = "";
-//
-//		VilleDAO villeDAO = new VilleDAO();
-//		ArrayList<String> villes = new ArrayList<String>();
-//		if (value.equals("villes")) {
-//			villes = villeDAO.requeteTrouverVilles();
-//			for (int i = 0; i < villes.size(); i++) {
-//				resultats += villes.get(i) + " ";
-//				if (i%7==0 && i!=0)
-//					resultats += "<br>";
-//			}
-//		}
-//
-//		return resultats;
-//	}
+
 
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	@ResponseBody
 	public Ville[] get(@RequestParam(required = false, value = "value") String value) {
-//		String resultats = "";
 		VilleDAO villeDAO = new VilleDAO();
 		Ville[] villes = new Ville[3352];
 		if (value.equals("villes")) {
 			villes = villeDAO.requeteTrouverVilles();
-//			for (int i = 0; i < villes.size(); i++) {
-//				resultats += villes.get(i) + " ";
-//			}
+
 		}
 
 		return villes;

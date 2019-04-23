@@ -24,7 +24,6 @@ public class EditionVilleServ extends HttpServlet {
 	 */
 	public EditionVilleServ() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -44,12 +43,9 @@ public class EditionVilleServ extends HttpServlet {
 				villeChoisie = villes[i];
 		}
 
-//		 afin d'éviter la coupure du nom au niveau des espaces suite à l'utilisation
-//		 de la session
-//		villeChoisie.setNomCommune(villeChoisie.getNomCommune().replace(" ", "@"));
 		session2.setAttribute("villeChoisie", villeChoisie);
 
-		// lien vers une JSP
+
 		RequestDispatcher dispat = request.getRequestDispatcher("editionVille.jsp");
 		dispat.forward(request, response);
 	}

@@ -46,28 +46,19 @@ public class UpdateServ extends HttpServlet {
 
 		RestTemplate restTemplate = new RestTemplate();
 
-//		String nomCommuneUnderscore = villeChoisie.getNomCommune().replace(" ", "_");
-
-//		if (nomCommune != nomCommuneUnderscore)
 		restTemplate.put("http://localhost:8081/put?Code_commune_INSEE=" + villeChoisie.getCodeCommuneInsee()
 				+ "&nomCommune=" + nomCommune, String.class);
-//		if (codePostal != villeChoisie.getCodePostal())
 		restTemplate.put("http://localhost:8081/put?Code_commune_INSEE=" + villeChoisie.getCodeCommuneInsee()
 				+ "&codePostal=" + codePostal, String.class);
-//		if (libelle != villeChoisie.getLibelleAcheminement())
 		restTemplate.put("http://localhost:8081/put?Code_commune_INSEE=" + villeChoisie.getCodeCommuneInsee()
 				+ "&libelleAcheminement=" + libelle, String.class);
-//		if (ligne5 != villeChoisie.getLigne5())
 		restTemplate.put("http://localhost:8081/put?Code_commune_INSEE=" + villeChoisie.getCodeCommuneInsee()
 				+ "&ligne5=" + ligne5, String.class);
-//		if (latitude != villeChoisie.getLattitude())
 		restTemplate.put("http://localhost:8081/put?Code_commune_INSEE=" + villeChoisie.getCodeCommuneInsee()
 				+ "&latitude=" + latitude, String.class);
-//		if (longitude != villeChoisie.getLongitude())
 		restTemplate.put("http://localhost:8081/put?Code_commune_INSEE=" + villeChoisie.getCodeCommuneInsee()
 				+ "&longitude=" + longitude, String.class);
 
-		System.out.println(villeChoisie.getLigne5());
 		RequestDispatcher dispat = request.getRequestDispatcher("affichageMessage.jsp");
 		dispat.forward(request, response);
 
